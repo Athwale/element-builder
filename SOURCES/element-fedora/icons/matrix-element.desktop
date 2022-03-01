@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Element
+GenericName=Encrypted chat
+Comment=Element matrix client
+Categories=Network
+StartupWMClass=Element
+StartupNotify=true
+Icon=matrix-element
+Exec=element
+Terminal=false
+

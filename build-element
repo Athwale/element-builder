@@ -1,11 +1,12 @@
 #!/bin/bash
+# Intended to be used on Fedora 30+ x86_64.
 # Usage ./build-element <fedora version> <element version>
-# https://github.com/vector-im/element-web/tags
 # Usage ./build-element 35 1.10.4
+# Get version number here: https://github.com/vector-im/element-web/tags
+# Requires mock, rpmi-build, wget, awk, tar, sed
 
 # TODO fedpkg --release f35 mockbuild ??
 # TODO rpmlint
-# TODO tweak desktop file
 # TODO configure less language packs??
 
 FEDORA_VER="$1"
@@ -17,7 +18,6 @@ echo "Building element: $ELEMENT_VER on $FEDORA_VER"
 
 # Clear old archives 
 rm -f ./SOURCES/*.gz
-rm -rf ./SOURCES/element-fedora/build
 
 # Download new sources from element
 wget https://github.com/vector-im/element-web/archive/refs/tags/v"${ELEMENT_VER}".tar.gz -O ./SOURCES/element-web-"${ELEMENT_VER}".tar.gz
@@ -55,4 +55,6 @@ mock --rootdir $(pwd)/mock --resultdir $(pwd) --enable-network -r fedora-"${FEDO
 # Clean up
 mock --rootdir $(pwd)/mock -r fedora-"${FEDORA_VER}"-x86_64 --clean
 rm -rf BUILD BUILDROOT RPMS SRPMS mock
+rm -f ./SOURCES/*.gz
+rm -f ./SOURCES/element-fedora/*.tgz
 rm -f *.log *.src.rpm
