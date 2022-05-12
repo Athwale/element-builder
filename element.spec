@@ -32,7 +32,7 @@ Source1: https://github.com/vector-im/element-web/archive/v%{version}/element-we
 Source2: ./SOURCES/element-fedora.tar.gz
 
 # Packages required for building:
-BuildRequires: cmake curl cargo desktop-file-utils git gcc-c++ libappstream-glib libxcrypt-compat libsecret-devel nodejs npm nodejs-yarn python pigz rust sqlcipher-devel
+BuildRequires: cmake curl cargo desktop-file-utils git gcc-c++ libappstream-glib libxcrypt-compat libsecret-devel nodejs npm nodejs-yarn python pigz rust sqlcipher-devel tcl openssl-devel
 
 # Packages required for running when installed:
 Requires: sqlcipher
@@ -121,6 +121,5 @@ umask 007
 /usr/bin/update-desktop-database &> /dev/null || :
 
 %changelog
-* Mon Feb 28 2022 
-  - Initial specfile
-
+* Tue May 23 2022 Test Builder <test@gmail.com>
+Test build
