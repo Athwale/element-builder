@@ -1,7 +1,7 @@
 #!/bin/bash
 # Intended to be used on Fedora 30+ x86_64.
 # Usage ./build-element <fedora version> <element version>
-# Usage ./build-element 35 1.10.4
+# Usage ./build-element 35 1.10.14
 # Get version number here: https://github.com/vector-im/element-web/tags
 # Requires mock, rpmi-build, wget, awk, tar, sed
 
