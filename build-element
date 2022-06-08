@@ -13,18 +13,26 @@ FEDORA_VER="$1"
 MAJOR="$(echo $2 | awk -F '.' '{ print $1"."$2}')"
 MINOR="$(echo $2 | awk -F '.' '{ print $3}')"
 
+function usage() {
+    echo "Usage ./build-element <fedora version> <element version>"
+    echo "Usage ./build-element 35 1.10.14"
+}
+
 if test -z $FEDORA_VER; then
-    echo "Fedora version missing"
+    echo "Fedora version missing."
+    usage
     exit 1
 fi
 
 if test -z $MAJOR; then
-    echo "Element major version missing"
+    echo "Element major version missing."
+    usage
     exit 1
 fi
 
 if test -z $MINOR; then
-    echo "Element minor version missing"
+    echo "Element minor version missing."
+    usage
     exit 1
 fi
 
