@@ -9,11 +9,23 @@
 # TODO rpmlint
 # TODO configure less language packs??
 
-FEDORA_VER="$1"
-MAJOR="$(echo $2 | awk -F '.' '{ print $1"."$2}')"
-MINOR="$(echo $2 | awk -F '.' '{ print $3}')"
+if [ $1 -gt 1 ]; then
+    FEDORA_VER="$1"
+    MAJOR="$(echo $2 | awk -F '.' '{ print $1"."$2}')"
+    MINOR="$(echo $2 | awk -F '.' '{ print $3}')"
+    ELEMENT_VER="${MAJOR}.${MINOR}"
+else
+    curl https://raw.githubusercontent.com/vector-im/element-web/develop/CHANGELOG.md > changelog
+    ELEMENT_VER=$(grep -o '\[[0-9]\.[0-9][0-9]\.[0-9]*\]' changelog | head -n 1 | tr -d [])
+    FEDORA_VER="35"
+    MAJOR="$(echo $ELEMENT_VER | awk -F '.' '{ print $1"."$2}')"
+    MINOR="$(echo $ELEMENT_VER | awk -F '.' '{ print $3}')"
+    echo "BUILD ELEMENT: $ELEMENT_VER on Fedora $FEDORA_VER"
+    rm -f changelog
+fi
 
 function usage() {
+    echo "Usage ./build-element (detects latest version automatically)"
     echo "Usage ./build-element <fedora version> <element version>"
     echo "Usage ./build-element 35 1.10.14"
 }
@@ -36,7 +48,6 @@ if test -z $MINOR; then
     exit 1
 fi
 
-ELEMENT_VER="${MAJOR}.${MINOR}"
 echo "Building element: $ELEMENT_VER on $FEDORA_VER"
 
 # Clear old archives 
@@ -77,6 +88,13 @@ mock --rootdir $(pwd)/mock --resultdir $(pwd) --enable-network -r fedora-"${FEDO
 
 # Clean up
 mock --rootdir $(pwd)/mock -r fedora-"${FEDORA_VER}"-x86_64 --clean
+
+mkdir -p version_history
+mv ./element*.rpm version_history
+
+echo "Finished ${ELEMENT_VER} in ./version_history"
+echo "$(pwd)/version_history/element-${ELEMENT_VER}-1.fc${FEDORA_VER}.x86_64.rpm"
+
 rm -rf BUILD BUILDROOT RPMS SRPMS mock
 rm -f ./SOURCES/*.gz
 rm -f ./SOURCES/element-fedora/*.tgz
