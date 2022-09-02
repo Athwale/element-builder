@@ -90,6 +90,7 @@ mock --rootdir $(pwd)/mock --resultdir $(pwd) --enable-network -r fedora-"${FEDO
 mock --rootdir $(pwd)/mock -r fedora-"${FEDORA_VER}"-x86_64 --clean
 
 mkdir -p version_history
+rm ./element*.src.rpm
 mv ./element*.rpm version_history
 
 echo "Finished ${ELEMENT_VER} in ./version_history"
