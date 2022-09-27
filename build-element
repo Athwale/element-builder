@@ -92,10 +92,13 @@ mock --rootdir $(pwd)/mock -r fedora-"${FEDORA_VER}"-x86_64 --clean
 mkdir -p version_history
 rm ./element*.src.rpm
 mv ./element*.rpm version_history
-
-echo "Finished ${ELEMENT_VER} in ./version_history"
-echo "$(pwd)/version_history/element-${ELEMENT_VER}-1.fc${FEDORA_VER}.x86_64.rpm"
-echo "element-${ELEMENT_VER}-1.fc${FEDORA_VER}.x86_64.rpm" > ./latest.txt
+if [ $? -eq 0 ]; then
+    echo "Finished ${ELEMENT_VER} in ./version_history"
+    echo "$(pwd)/version_history/element-${ELEMENT_VER}-1.fc${FEDORA_VER}.x86_64.rpm"
+    echo "element-${ELEMENT_VER}-1.fc${FEDORA_VER}.x86_64.rpm" > ./latest.txt
+else
+    echo "ERROR during build"
+fi
 
 rm -rf BUILD BUILDROOT RPMS SRPMS mock
 rm -f ./SOURCES/*.gz
