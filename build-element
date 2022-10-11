@@ -96,6 +96,8 @@ if [ $? -eq 0 ]; then
     echo "Finished ${ELEMENT_VER} in ./version_history"
     echo "$(pwd)/version_history/element-${ELEMENT_VER}-1.fc${FEDORA_VER}.x86_64.rpm"
     echo "element-${ELEMENT_VER}-1.fc${FEDORA_VER}.x86_64.rpm" > ./latest.txt
+    echo "Copy element to destination"
+    copy-new-element
 else
     echo "ERROR during build"
 fi
