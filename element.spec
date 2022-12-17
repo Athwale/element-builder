@@ -68,6 +68,9 @@ mv element-fedora/*.tgz element-web-%{version}/depends/sources/
 %endif
 
 # Build element-web
+# TODO remove this and try without it, workaround for ERR_OSSL_EVP_UNSUPPORTED
+export NODE_OPTIONS=--openssl-legacy-provider
+
 cd %{_builddir}/element/element-web-%{version}
 yarn install 
 yarn run build
@@ -94,7 +97,6 @@ cp -a element-desktop-%{version}/dist/linux-unpacked/* %{buildroot}%{dir_install
 # /bin/element -> /usr/share/matrix-element/element-desktop makes it possible to run element from command line.
 ln -s %{dir_install}/%{name}-desktop %{buildroot}%{_bindir}/%{name}
 
-# install -D -m644 -p element-fedora/icons/matrix-element.desktop /builddir/build/BUILDROOT/element-1.10.4-1.fc35.x86_64/usr/share/applications/matrix-element.desktop
 install -D -m644 -p element-fedora/icons/Adwaita-%{element_name}.png %{buildroot}%{_datadir}/icons/Adwaita/64x64/apps/%{element_name}.png
 install -D -m644 -p element-fedora/icons/%{element_name}.desktop %{buildroot}%{_datadir}/applications/%{element_name}.desktop
 

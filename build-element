@@ -1,11 +1,11 @@
 #!/bin/bash
 # Intended to be used on Fedora 30+ x86_64.
 # Usage ./build-element <fedora version> <element version>
-# Usage ./build-element 35 1.10.14
+# Usage ./build-element 37 1.10.14
 # Get version number here: https://github.com/vector-im/element-web/tags
 # Requires mock, rpmi-build, wget, awk, tar, sed
 
-# TODO fedpkg --release f35 mockbuild ??
+# TODO fedpkg --release f37 mockbuild ??
 # TODO rpmlint
 # TODO configure less language packs??
 
@@ -17,7 +17,7 @@ if [ $1 -gt 1 ]; then
 else
     curl https://raw.githubusercontent.com/vector-im/element-web/develop/CHANGELOG.md > changelog
     ELEMENT_VER=$(grep -o '\[[0-9]\.[0-9][0-9]\.[0-9]*\]' changelog | head -n 1 | tr -d [])
-    FEDORA_VER="35"
+    FEDORA_VER="36"
     MAJOR="$(echo $ELEMENT_VER | awk -F '.' '{ print $1"."$2}')"
     MINOR="$(echo $ELEMENT_VER | awk -F '.' '{ print $3}')"
     echo "BUILD ELEMENT: $ELEMENT_VER on Fedora $FEDORA_VER"
@@ -27,7 +27,7 @@ fi
 function usage() {
     echo "Usage ./build-element (detects latest version automatically)"
     echo "Usage ./build-element <fedora version> <element version>"
-    echo "Usage ./build-element 35 1.10.14"
+    echo "Usage ./build-element $FEDORA_VER 1.10.14"
 }
 
 if test -z $FEDORA_VER; then
