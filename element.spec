@@ -72,7 +72,8 @@ mv element-fedora/*.tgz element-web-%{version}/depends/sources/
 export NODE_OPTIONS=--openssl-legacy-provider
 
 cd %{_builddir}/element/element-web-%{version}
-yarn install 
+yarn install --openssl_fips=''
+
 yarn run build
 # Without this element does not start and shows a config error.
 install -D -m644 -p config.sample.json webapp/config.json
